@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You vs. AI Roast Battle 🔥</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+    body {
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg, #1a0000, #330022);
+      font-family: 'Poppins', sans-serif;
+      color: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 3.2rem;
+      color: #ff007a;
+      text-shadow: 0 0 8px #ff007a, 0 0 15px #ff48b7;
+      margin-bottom: 5px;
+    }
+    p {
+      font-weight: 600;
+      color: #f7c7d9;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+    .container {
+      background: #330022;
+      border-radius: 25px;
+      box-shadow: 0 0 15px #ff0055aa, inset 0 0 20px #ff004488;
+      padding: 25px 30px;
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    textarea {
+      width: 100%;
+      height: 90px;
+      border-radius: 18px;
+      border: none;
+      resize: none;
+      font-size: 1.15rem;
+      padding: 18px 20px;
+      font-weight: 600;
+      background: #440033;
+      color: #f7f7f7;
+      box-shadow: 0 0 10px #ff007aaa inset;
+      outline: none;
+    }
+    button {
+      margin-top: 18px;
+      background: linear-gradient(45deg, #ff00a1, #ff0066);
+      border: none;
+      padding: 15px 45px;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: white;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #ff007acc;
+    }
+    .chat-box {
+      margin-top: 30px;
+      width: 100%;
+      max-height: 420px;
+      overflow-y: auto;
+      background: #440033;
+      border-radius: 25px;
+      padding: 20px 25px;
+      box-shadow: 0 0 20px #ff007a88 inset;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .bubble {
+      padding: 14px 22px;
+      border-radius: 30px;
+      max-width: 85%;
+      line-height: 1.3;
+      word-break: break-word;
+      box-shadow: 0 0 15px #ff007a88;
+      position: relative;
+    }
+    .user {
+      background: #770033cc;
+      color: #f7f7f7;
+      align-self: flex-end;
+    }
+    .ai {
+      background: #ff007acc;
+      color: #fff0f7;
+      align-self: flex-start;
+    }
+  </style>
+</head>
+<body>
+  <h1>You vs. AI Roast Battle 🔥</h1>
+  <p>Type your roast and let the AI clap back — with voice!</p>
+  <div class="container">
+    <textarea id="userInput" placeholder="Type your roast..."></textarea>
+    <button id="roastBtn">🔥 Clap Back</button>
+    <div class="chat-box" id="chatBox">
+      <div class="bubble ai">Bring it on 😈</div>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.voice = speechSynthesis.getVoices().find(v => v.name.includes("Female") || v.name.includes("Google")) || null;
+      utterance.rate = 1;
+      utterance.pitch = 1.1;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(utterance);
+    }
+
+    function addMessage(text, sender) {
+      const bubble = document.createElement("div");
+      bubble.className = `bubble ${sender}`;
+      bubble.textContent = text;
+      chatBox.appendChild(bubble);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function generateRoast(input) {
+      const baseRoasts = [
+        "That's cute, now try saying something intelligent.",
+        "You're like a cloud—when you disappear, it's a beautiful day.",
+        "Your opinion is noted... and ignored.",
+        "If I had a dollar for every time you made sense, I’d still be broke.",
+        "You're not even worth the calories I burn talking to you."
+      ];
+
+      const keywordRoasts = [
+        { keyword: "ugly", response: "You're calling me ugly with that face? Bold choice." },
+        { keyword: "broke", response: "Coming from someone whose wallet echoes." },
+        { keyword: "dumb", response: "You're the reason shampoo bottles have instructions." },
+        { keyword: "fat", response: "Your body shaming game is as weak as your personality." },
+        { keyword: "lame", response: "If I'm lame, you're the whole crutch." }
+      ];
+
+      const lowerInput = input.toLowerCase();
+      for (const pair of keywordRoasts) {
+        if (lowerInput.includes(pair.keyword)) return pair.response;
+      }
+      return baseRoasts[Math.floor(Math.random() * baseRoasts.length)];
+    }
+
+    document.getElementById("roastBtn").addEventListener("click", () => {
+      const inputEl = document.getElementById("userInput");
+      const userText = inputEl.value.trim();
+      if (!userText) return;
+
+      addMessage(userText, "user");
+      const roast = generateRoast(userText);
+      addMessage(roast, "ai");
+      speak(roast);
+
+      inputEl.value = "";
+    });
+
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = () => {};
+    }
+  </script>
+</body>
+</html>
