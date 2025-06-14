@@ -2,99 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>You vs. AI Roast Battle 🔥</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top, #1a001a, #0d000f);
       font-family: 'Poppins', sans-serif;
-      color: #fdfdfd;
+      background: linear-gradient(135deg, #0f001f, #1a0033);
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 40px 20px;
-      overflow-x: hidden;
+      padding: 60px 20px 40px;
     }
 
     h1 {
-      font-size: 3.2rem;
-      color: #ff007a;
-      text-shadow: 0 0 10px #ff007a, 0 0 20px #ff48b7;
+      font-size: 3rem;
+      color: #ff00b7;
+      text-shadow: 0 0 15px #ff00f788, 0 0 30px #ff00f7cc;
       margin-bottom: 10px;
-      animation: pulse 1.5s infinite alternate;
+      animation: flicker 2s infinite;
     }
 
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.03); }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
     }
 
     p {
-      font-weight: 600;
-      color: #f7c7d9;
+      font-size: 1.2rem;
+      color: #f7c7f7;
       margin-bottom: 25px;
-      font-size: 1.15rem;
+      text-align: center;
     }
 
     .container {
-      background: #2a0022;
-      border-radius: 30px;
-      box-shadow: 0 0 30px #ff005544, inset 0 0 30px #ff004455;
-      padding: 25px;
+      background: #1a002a;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #ff00aa55;
+      padding: 30px;
+      max-width: 500px;
       width: 100%;
-      max-width: 550px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeIn 0.7s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     textarea {
       width: 100%;
       height: 90px;
-      border-radius: 18px;
-      border: none;
+      border-radius: 15px;
+      border: 2px solid #ff00aa55;
+      background-color: #2b003a;
+      color: #fff;
+      font-size: 1rem;
+      padding: 15px;
       resize: none;
-      font-size: 1.15rem;
-      padding: 18px 20px;
-      font-weight: 600;
-      background: #440033;
-      color: #f7f7f7;
-      box-shadow: 0 0 12px #ff007aaa inset;
-      outline: none;
-      transition: all 0.2s ease-in-out;
+      box-shadow: inset 0 0 10px #ff00aa66;
+      transition: border-color 0.3s ease;
     }
 
     textarea:focus {
-      box-shadow: 0 0 20px #ff0099cc inset;
+      border-color: #ff00ff;
+      outline: none;
     }
 
     button {
       margin-top: 20px;
-      background: linear-gradient(45deg, #ff00a1, #ff0066);
+      background: linear-gradient(45deg, #ff00d4, #ff0066);
       border: none;
-      padding: 16px 50px;
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: white;
-      border-radius: 40px;
+      padding: 14px 40px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 0 18px #ff007acc;
-      transition: transform 0.2s;
+      box-shadow: 0 0 15px #ff00aa88;
+      transition: transform 0.2s ease;
     }
 
     button:hover {
@@ -103,58 +92,61 @@
 
     .chat-box {
       margin-top: 30px;
-      width: 100%;
-      max-height: 420px;
+      background: #290033;
+      border-radius: 20px;
+      padding: 20px;
+      max-height: 400px;
       overflow-y: auto;
-      background: #440033;
-      border-radius: 25px;
-      padding: 20px 25px;
-      box-shadow: 0 0 20px #ff007a88 inset;
+      box-shadow: inset 0 0 20px #ff00cc44;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      font-weight: 600;
-      font-size: 1.05rem;
+      gap: 16px;
     }
 
     .bubble {
-      padding: 14px 22px;
-      border-radius: 30px;
-      max-width: 85%;
-      line-height: 1.4;
+      padding: 14px 20px;
+      border-radius: 20px;
+      max-width: 80%;
       word-break: break-word;
-      box-shadow: 0 0 15px #ff007a88;
-      position: relative;
-      animation: bubblePop 0.4s ease;
-    }
-
-    @keyframes bubblePop {
-      0% { transform: scale(0.9); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      font-size: 1.05rem;
+      line-height: 1.4;
+      animation: fadeIn 0.3s ease;
     }
 
     .user {
-      background: #770033cc;
-      color: #f7f7f7;
       align-self: flex-end;
+      background: #660066;
+      box-shadow: 0 0 12px #ff00ccaa;
     }
 
     .ai {
-      background: #ff007acc;
-      color: #fff0f7;
       align-self: flex-start;
+      background: #ff0088;
+      color: #fff0f8;
+      box-shadow: 0 0 12px #ff00bb;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      p { font-size: 1rem; }
+      button { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
   <h1>You vs. AI Roast Battle 🔥</h1>
-  <p>Type your roast and let the AI serve heat — with voice!</p>
+  <p>Drop a roast and let the AI fire back — louder, sassier, and spicier!</p>
 
   <div class="container">
-    <textarea id="userInput" placeholder="Spit your weak roast here..."></textarea>
-    <button id="roastBtn">🔥 Clap Back</button>
+    <textarea id="userInput" placeholder="Roast me if you dare..."></textarea>
+    <button id="roastBtn">💥 Roast Me</button>
     <div class="chat-box" id="chatBox">
-      <div class="bubble ai">Step up. I'm warmed up. 😈</div>
+      <div class="bubble ai">What’s up? Ready to get roasted?</div>
     </div>
   </div>
 
@@ -164,27 +156,25 @@
     const roastBtn = document.getElementById("roastBtn");
 
     const baseRoasts = [
-      "Your roast hit like a butterfly... with arthritis.",
-      "You talk a lot for someone who Googles how to boil water.",
-      "You're not even on my radar... and I have wide detection.",
-      "Was that a roast or just your brain buffering?",
-      "I'd roast you back, but it looks like life already did."
+      "Your roast hit like a wet tissue.",
+      "You're the human version of a pop-up ad.",
+      "You're not stupid; you just have bad luck thinking.",
+      "I’d agree with you, but then we’d both be wrong.",
+      "Your secrets are safe with me — I never listen anyway."
     ];
 
     const keywordRoasts = [
-      { keyword: "ugly", response: "You calling me ugly with that profile pic? Girl, please." },
-      { keyword: "slow", response: "You're so slow even your shadow left you." },
-      { keyword: "fat", response: "I'm not saying you're fat, but your chair signed a resignation letter." },
-      { keyword: "poor", response: "Your bank account's so empty, it echoes 'hello?'." },
-      { keyword: "dumb", response: "You're the reason WiFi has trust issues." },
-      { keyword: "trash", response: "You're not trash — you're the whole landfill." }
+      { keyword: "ugly", response: "Calling me ugly? Your mirror must be blind." },
+      { keyword: "broke", response: "You're so broke, even your shadow left you for a richer owner." },
+      { keyword: "dumb", response: "You're the reason autocorrect gives up." },
+      { keyword: "fat", response: "I'm not saying you're fat, but your shadow has its own zip code." },
+      { keyword: "slow", response: "You're so slow, snails lap you for fun." }
     ];
 
     function speak(text) {
-      const voices = speechSynthesis.getVoices();
-      const voice = voices.find(v => /female|Google/i.test(v.name)) || voices[0];
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.voice = voice;
+      const voices = speechSynthesis.getVoices();
+      utterance.voice = voices.find(v => /female|Google/i.test(v.name)) || voices[0];
       utterance.pitch = 1.1;
       utterance.rate = 1;
       speechSynthesis.cancel();
@@ -213,26 +203,25 @@
 
       addMessage(userText, "user");
       const roast = generateRoast(userText);
-      addMessage(roast, "ai");
-      speak(roast);
+      setTimeout(() => {
+        addMessage(roast, "ai");
+        speak(roast);
+      }, 300);
+
       inputEl.value = "";
     }
 
     roastBtn.addEventListener("click", handleRoast);
-
-    inputEl.addEventListener("keydown", (e) => {
+    inputEl.addEventListener("keydown", e => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         handleRoast();
       }
     });
 
-    // Fix Chrome bug with voices not loading
     if (speechSynthesis.onvoiceschanged !== undefined) {
       speechSynthesis.onvoiceschanged = () => {};
     }
-
-    inputEl.focus();
   </script>
 </body>
 </html>
